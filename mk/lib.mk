@@ -186,9 +186,9 @@ MINLIBOBJS = \
 #	$(LIBVESA_OBJS)
 
 CORELIBOBJS = \
-	memcpy.o memset.o memcmp.o printf.o strncmp.o vfprintf.o 	\
+	memcmp.o printf.o strncmp.o vfprintf.o				\
 	strlen.o vsnprintf.o snprintf.o stpcpy.o strcmp.o strdup.o 	\
-	strcpy.o strncpy.o setjmp.o fopen.o fread.o fread2.o puts.o 	\
+	strcpy.o strncpy.o fopen.o fread.o fread2.o puts.o	 	\
 	strtoul.o strntoumax.o strcasecmp.o 				\
 	sprintf.o strlcat.o strchr.o strlcpy.o strncasecmp.o ctypes.o 	\
 	fputs.o fwrite2.o fwrite.o fgetc.o fclose.o lmalloc.o 		\
@@ -202,6 +202,11 @@ CORELIBOBJS = \
 	syslinux/debug.o						\
 	$(LIBENTRY_OBJS) \
 	$(LIBMODULE_OBJS)
+
+ifndef EFI_BUILD
+# For EFI, these are part of gnu-efi
+CORELIBOBJS += setjmp.o memcpy.o memset.o
+endif
 
 LDFLAGS	= -m elf_$(ARCH) --hash-style=gnu -T $(com32)/lib/$(ARCH)/elf.ld
 
