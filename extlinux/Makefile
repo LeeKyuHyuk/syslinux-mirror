@@ -18,9 +18,9 @@ include $(MAKEDIR)/syslinux.mk
 
 OPTFLAGS = -g -Os
 INCLUDES = -I$(SRC) -I$(objdir) -I$(SRC)/../libinstaller
-CFLAGS	 = $(GCCWARN) -Wno-sign-compare -D_FILE_OFFSET_BITS=64 \
+CFLAGS	 = $(CFLAGS_FOR_BUILD) $(GCCWARN) -Wno-sign-compare -D_FILE_OFFSET_BITS=64 \
 	   $(OPTFLAGS) $(INCLUDES)
-LDFLAGS	 = 
+LDFLAGS	 = $(LDFLAGS_FOR_BUILD)
 
 SRCS     = main.c \
 	   mountinfo.c \
@@ -52,16 +52,16 @@ spotless: clean
 installer: extlinux
 
 extlinux: $(OBJS)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC_FOR_BUILD) $(LDFLAGS) -o $@ $^
 
 strip:
 	$(STRIP) extlinux
 
 %.o: %.c
-	$(CC) $(UMAKEDEPS) $(CFLAGS) -c -o $@ $<
+	$(CC_FOR_BUILD) $(UMAKEDEPS) $(CFLAGS) -c -o $@ $<
 %.i: %.c
-	$(CC) $(UMAKEDEPS) $(CFLAGS) -E -o $@ $<
+	$(CC_FOR_BUILD) $(UMAKEDEPS) $(CFLAGS) -E -o $@ $<
 %.s: %.c
-	$(CC) $(UMAKEDEPS) $(CFLAGS) -S -o $@ $<
+	$(CC_FOR_BUILD) $(UMAKEDEPS) $(CFLAGS) -S -o $@ $<
 
 -include .*.d
