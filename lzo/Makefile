@@ -11,9 +11,12 @@
 ## -----------------------------------------------------------------------
 
 VPATH = $(SRC)
-include $(MAKEDIR)/build.mk
+include $(MAKEDIR)/syslinux.mk
 
 INCLUDES += -I$(SRC)/include
+
+%.o: %.c
+	$(CC_FOR_BUILD) $(UMAKEDEPS) $(CFLAGS_FOR_BUILD) $(INCLUDES) -c -o $@ $<
 
 LIBOBJS = $(patsubst %.c,%.o,$(subst $(SRC)/,,$(wildcard $(SRC)/src/*.c)))
 LIB     = lzo.a
@@ -30,7 +33,7 @@ $(LIB) : $(LIBOBJS)
 	$(RANLIB) $@
 
 prepcore : prepcore.o $(LIB)
-	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
+	$(CC_FOR_BUILD) $(LDFLAGS_FOR_BUILD) -o $@ $^ $(LIBS)
 
 tidy dist clean spotless:
 	rm -f $(BINS)
