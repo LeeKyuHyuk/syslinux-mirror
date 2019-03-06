@@ -4,7 +4,7 @@
 #
 
 CLEANUP		:=
-CFLAGS		:=
+CFLAGS		:= -fno-PIE
 ASFLAGS		:=
 LDFLAGS		:=
 MAKEDEPS	:= Makefile
