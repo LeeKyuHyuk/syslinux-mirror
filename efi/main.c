@@ -10,7 +10,6 @@
 #include <syslinux/firmware.h>
 #include <syslinux/linux.h>
 #include <sys/ansi.h>
-#include <setjmp.h>
 
 #include "efi.h"
 #include "fio.h"
@@ -30,7 +29,7 @@ uint32_t timer_irq;
 __export uint8_t KbdMap[256];
 char aux_seg[256];
 
-static jmp_buf load_error_buf;
+static jmp_buf *load_error_buf;
 
 static inline EFI_STATUS
 efi_close_protocol(EFI_HANDLE handle, EFI_GUID *guid, EFI_HANDLE agent,
